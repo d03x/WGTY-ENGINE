@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+      integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <div id="connected"></div>
+    <div id="qrcode"></div>
+
+    <script>
+      var text = null;
+      const socket = io("localhost:8080", {
+        extraHeaders: {
+          cid: "asw",
+          authorization: "Bearer 324324324",
+        },
+      });
+      socket.on("qrcode", (e) => {
+        console.log(e);
+      });
+      socket.on("log", (e) => {
+        console.log(e);
+      });
+      socket.on("connected", () => {
+        document.querySelector("#connected").innerHTML = "Connected";
+      });
+      socket.on("chat", (e) => {
+        console.log(e);
+      });
+      socket.emit("chat message", "OK");
+      var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: text,
+        width: 400,
+        height: 400,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+    </script>
+  </body>
+</html>

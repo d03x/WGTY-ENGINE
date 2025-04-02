@@ -1,0 +1,45 @@
+{
+  "name": "@dadandev/wagaty",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.ts",
+  "scripts": {
+    "migrate": "tsx src/database/migrate.ts",
+    "build": "esbuild src/server.ts --platform=node --bundle --minify --outfile=dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "start": "node ./dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^5.0.1",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.16",
+    "@types/qrcode": "^1.5.5",
+    "@types/socket.io": "^3.0.2",
+    "baileys": "^6.7.16",
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^11.9.1",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "esbuild": "^0.25.2",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.0",
+    "pino-http": "^10.4.0",
+    "qrcode": "^1.5.4",
+    "qrcode-terminal": "^0.12.0",
+    "socket.io": "^4.8.1",
+    "tsc": "^2.0.4",
+    "tsx": "^4.19.3"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.2"
+  }
+}
