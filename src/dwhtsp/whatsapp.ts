@@ -159,7 +159,10 @@ class Whatsapp {
                             this.clearState(name)
                             retryCount.delete(name);
                         }
+
                     }
+                    console.log(retryCount);
+
                 })
                 ev.on("messages.upsert", (msg) => {
                     callbacks.get(callback.ON_MESSAGGE_RECIVED)?.({

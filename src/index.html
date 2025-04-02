@@ -28,19 +28,13 @@
           authorization: "Bearer n2837423479832werw9837432h4",
         },
       });
-      socket.on("qr-expired", () => {
-        document.querySelector("#qrcode").innerHTML = "EXPIRED";
-      });
-      const logs = document.querySelector("#logs");
-      socket.on("logs", (e) => {
-        logs.innerHTML += "<p>" + e + "/5<p>";
-      });
-      socket.on("qrcode", (e) => {
-        document.getElementById("qrcode").src = e.qr;
+
+      socket.on("d-server", (e) => {
+        console.log(e);
       });
 
       function generateQrCode() {
-        socket.emit("get-session", "deden");
+        socket.emit("start-session", "deden");
       }
     </script>
   </body>
