@@ -18,37 +18,30 @@
   </head>
   <body>
     <div id="connected"></div>
-    <div id="qrcode"></div>
-
+    <img id="qrcode" alt="" srcset="" />
+    <button onclick="generateQrCode()">Generate QRCODE</button>
+    <div id="logs"></div>
     <script>
       var text = null;
       const socket = io("localhost:8080", {
         extraHeaders: {
-          cid: "asw",
-          authorization: "Bearer 324324324",
+          authorization: "Bearer n2837423479832werw9837432h4",
         },
       });
+      socket.on("qr-expired", () => {
+        document.querySelector("#qrcode").innerHTML = "EXPIRED";
+      });
+      const logs = document.querySelector("#logs");
+      socket.on("logs", (e) => {
+        logs.innerHTML += "<p>" + e + "/5<p>";
+      });
       socket.on("qrcode", (e) => {
-        console.log(e);
+        document.getElementById("qrcode").src = e.qr;
       });
-      socket.on("log", (e) => {
-        console.log(e);
-      });
-      socket.on("connected", () => {
-        document.querySelector("#connected").innerHTML = "Connected";
-      });
-      socket.on("chat", (e) => {
-        console.log(e);
-      });
-      socket.emit("chat message", "OK");
-      var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: text,
-        width: 400,
-        height: 400,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H,
-      });
+
+      function generateQrCode() {
+        socket.emit("get-session", "deden");
+      }
     </script>
   </body>
 </html>

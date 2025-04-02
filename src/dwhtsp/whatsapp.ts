@@ -73,7 +73,6 @@ class Whatsapp {
             }
         })
         sock.ev.on('creds.update', saveCreds)
-
         return sock;
 
     }
@@ -107,8 +106,23 @@ class Whatsapp {
     public onMessageRecived(listener: (e: any) => void) {
         callbacks.set(callback.ON_MESSAGGE_RECIVED, listener)
     }
+
+    /**
+     * isSessionAlerdy
+     */
+    public isSessionAlerdy(session: string) {
+        const paht = path.join(this.sessionFolder(), session);
+        if (existsSync(paht) && this.getSession(session)) {
+            return true;
+        }
+        return false;
+
+    }
+
     //ini adalah new session
-    public async startSession(name: string): Promise<WASocket> {
+    public async startSession(name: string): Promise<WASocket | null> {
+        console.log(`New session ${name}`);
+
         const connect = async (): Promise<WASocket> => {
             try {
                 let $socket = await this.createSocket(name);
@@ -159,7 +173,11 @@ class Whatsapp {
                 return Promise.reject(`Opps:${error}`)
             }
         }
-        return connect();
+        if (this.isSessionAlerdy(name)) {
+            console.log("Session Alerdy!");
+            return null;
+        }
+        return await connect();
     }
     /**
      * loadSessionFromStorage
